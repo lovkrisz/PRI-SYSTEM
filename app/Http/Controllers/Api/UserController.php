@@ -17,6 +17,6 @@ class UserController extends Controller
                 "token" => $user->createToken("API_TOKEN")->plainTextToken
             ], 200);
         }
-
+        return response()->json(["message" => "Something went wrong"], 500);
     }
 }
