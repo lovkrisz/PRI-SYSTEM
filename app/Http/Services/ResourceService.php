@@ -3,7 +3,9 @@
 namespace App\Http\Services;
 
 use App\Models\Resource;
+use App\Models\ResourceUsage;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class ResourceService
 {
@@ -18,13 +20,12 @@ class ResourceService
     {
         return Resource::orderBy("name", "ASC")->paginate($max_rows_per_page);
     }
-    static public function get_all()
+    static public function update(array $validated_data, string $irany): bool
     {
-        return Resource::all();
-    }
-    static public function update(array $validated_data): bool
-    {
-        $resource = Resource::where("barcode", $validated_data["barcode"])->increment("quantity", $validated_data["amount"]);
+        if($irany == "up")
+            $resource = Resource::where("barcode", $validated_data["barcode"])->increment("quantity", $validated_data["amount"]);
+        else
+            $resource = Resource::where("barcode", $validated_data["barcode"])->decrement("quantity", 1);
         if ($resource)
             return true;
         else
@@ -37,5 +38,40 @@ class ResourceService
             return $resource["usablebyprinters"];
         } else
             return [];
+    }
+
+    public static function add_usage(array $validated): void
+    {
+        ResourceUsage::create([
+            "printer_id" => $validated["printer"],
+            "resource_barcode" => $validated["barcode"]
+        ]);
+    }
+
+    public static function get_used_resource_in_this_month(): Collection
+    {
+        $date = date("Y-m");
+        return ResourceUsage::where('created_at', 'like', '%'.$date.'%')->get();
+    }
+    public static function get_name_by_barcode(string $barcode): string {
+        $resource = Resource::where("barcode", $barcode)->first();
+        if ($resource) {
+            return $resource["name"];
+        } else
+            return "";
+    }
+    public static function get_color_by_barcode(string $barcode): string {
+        $resource = Resource::where("barcode", $barcode)->first();
+        if ($resource) {
+            return $resource["color"];
+        } else
+            return "";
+    }
+    public static function get_capacity_by_barcode(string $barcode): string {
+        $resource = Resource::where("barcode", $barcode)->first();
+        if ($resource) {
+            return $resource["capacity"];
+        } else
+            return "";
     }
 }

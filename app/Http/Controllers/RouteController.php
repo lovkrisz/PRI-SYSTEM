@@ -42,4 +42,8 @@ class RouteController extends Controller
     {
         return view("show_resource_out");
     }
+    public function show_usage_list():View {
+        $usage = ResourceService::get_used_resource_in_this_month();
+        return view("show_usage_list")->with("data", $usage);
+    }
 }

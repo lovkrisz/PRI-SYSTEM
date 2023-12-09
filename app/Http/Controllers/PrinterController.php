@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Resource;
-use Illuminate\Http\Request;
 use App\Http\Requests\AddPrinterRequest;
 use Illuminate\Http\RedirectResponse;
 

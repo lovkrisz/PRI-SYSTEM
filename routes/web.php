@@ -27,6 +27,8 @@ Route::middleware("auth")->group(function () {
     Route::post("/resource_in_submit", [ResourceController::class, "resource_in_submit"])->name("resource_in.submit");
     Route::get("/resource_out", [RouteController::class, "show_resource_out"]);
     Route::post("/resource_out_get_printers", [ResourceController::class, "resource_out_get_printers"])->name("resource_out.get_printers");
+    Route::post("/resource_out.submit", [ResourceController::class, "resource_out_submit"])->name("resource_out.submit");
+    Route::get("/usage_list", [RouteController::class, "show_usage_list"]);
 });
 
 /* Protected Routes */

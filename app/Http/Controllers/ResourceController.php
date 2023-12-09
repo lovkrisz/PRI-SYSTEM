@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddResourceRequest;
 use App\Http\Requests\ResourceInRequest;
 use App\Http\Requests\ResourceOutGetPrintersRequest;
+use App\Http\Requests\ResourceOutRequest;
 use App\Http\Services\ResourceService;
 use App\Http\Services\PrinterService;
 use App\Http\Services\SessionMsgService;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 
 
@@ -22,7 +25,7 @@ class ResourceController extends Controller
     }
     public function resource_in_submit(ResourceInRequest $req)
     {
-        $hasinDB = ResourceService::update($req->validated());
+        $hasinDB = ResourceService::update($req->validated(), "up");
         if ($hasinDB) {
             SessionMsgService::flash(msg: __("messages.successfull_resource_in"), prefix: "success");
             return redirect("/resource_in");
@@ -30,14 +33,24 @@ class ResourceController extends Controller
             return Redirect::back()->withErrors(['msg' => __("messages.no_barcode_in_db")]);
         }
     }
-    public function resource_out_get_printers(ResourceOutGetPrintersRequest $req)
+    public function resource_out_get_printers(ResourceOutGetPrintersRequest $req): Collection
     {
         $validated = $req->validated();
-        $barcode = $validated["barcode"];
         $printer_id_list = ResourceService::find_by_barcode(barcode: $validated["barcode"]);
         if (!empty($printer_id_list)) {
-            $printers = PrinterService::get_all_printer_by_id(idarray: $printer_id_list);
-            return $printers;
+            return PrinterService::get_all_printer_by_id(idarray: $printer_id_list);
+        }
+        return Collection::empty();
+
+    }
+    public function resource_out_submit(ResourceOutRequest $req): RedirectResponse {
+        $hasinDB = ResourceService::update($req->validated(), "down");
+        if ($hasinDB) {
+            ResourceService::add_usage($req->validated());
+            SessionMsgService::flash(msg: __("messages.successfull_resource_out"), prefix: "success");
+            return redirect("/resource_out");
+        } else {
+            return Redirect::back()->withErrors(['msg' => __("messages.no_barcode_in_db")]);
         }
 
     }

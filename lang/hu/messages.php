@@ -48,4 +48,7 @@ return [
     "resource_in_amount" => "Mennyiség",
     "successfull_resource_in" => "Sikeres bevételezés!",
     "no_barcode_in_db" => "A vonalkód nem található az adatbázisban!",
+    "successfull_resource_out" => "Sikeresen kiadtad a kellékanyagot",
+    "show_date" => "Dátum",
+    "export_pdf" => "Export PDF",
 ];

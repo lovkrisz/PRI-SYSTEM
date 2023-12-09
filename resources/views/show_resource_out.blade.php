@@ -25,7 +25,7 @@
                         </div>
                     </div>
                 @endif
-                <form method="POST" action="{{ route('resource_in.submit') }}">
+                <form method="POST" action="{{ route('resource_out.submit') }}">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
