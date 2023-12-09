@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Resource;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddPrinterRequest;
 use Illuminate\Http\RedirectResponse;
@@ -14,5 +15,6 @@ class PrinterController extends Controller {
         PrinterService::create($req->validated());
         SessionMsgService::flash(msg: __("messages.successfull_printer_add"), prefix: "success");
         return redirect("/add_printer");
+
     }
 }
