@@ -10,6 +10,7 @@ use App\Http\Services\ResourceService;
 use App\Http\Services\PrinterService;
 use App\Http\Services\SessionMsgService;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 
@@ -23,6 +24,7 @@ class ResourceController extends Controller
         return redirect("/add_resource");
 
     }
+
     public function resource_in_submit(ResourceInRequest $req)
     {
         $hasinDB = ResourceService::update($req->validated(), "up");
@@ -33,6 +35,7 @@ class ResourceController extends Controller
             return Redirect::back()->withErrors(['msg' => __("messages.no_barcode_in_db")]);
         }
     }
+
     public function resource_out_get_printers(ResourceOutGetPrintersRequest $req): Collection
     {
         $validated = $req->validated();
@@ -43,7 +46,9 @@ class ResourceController extends Controller
         return Collection::empty();
 
     }
-    public function resource_out_submit(ResourceOutRequest $req): RedirectResponse {
+
+    public function resource_out_submit(ResourceOutRequest $req): RedirectResponse
+    {
         $hasinDB = ResourceService::update($req->validated(), "down");
         if ($hasinDB) {
             ResourceService::add_usage($req->validated());
@@ -51,6 +56,33 @@ class ResourceController extends Controller
             return redirect("/resource_out");
         } else {
             return Redirect::back()->withErrors(['msg' => __("messages.no_barcode_in_db")]);
+        }
+
+    }
+
+    public function api_resource_out_submit(ResourceOutRequest $req): JsonResponse
+    {
+        $hasinDB = ResourceService::update($req->validated(), "down");
+        if ($hasinDB) {
+            ResourceService::add_usage($req->validated());
+            return response()->json([
+                "message" => __("messages.successfull_resource_out")
+            ], 200);
+        } else {
+            return response()->json(["message" => __("messages.no_barcode_in_db")], 500);
+        }
+
+    }
+
+    public function api_resource_in_submit(ResourceInRequest $req): JsonResponse
+    {
+        $hasinDB = ResourceService::update($req->validated(), "up");
+        if ($hasinDB) {
+            return response()->json([
+                "message" => __("messages.successfull_resource_in")
+            ], 200);
+        } else {
+            return response()->json(["message" => __("messages.no_barcode_in_db")], 500);
         }
 
     }

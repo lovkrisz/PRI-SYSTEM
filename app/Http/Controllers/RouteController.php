@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsageListExport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\View;
 use App\Http\Services\PrinterService;
 use App\Http\Services\ResourceService;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RouteController extends Controller
 {
@@ -45,5 +47,9 @@ class RouteController extends Controller
     public function show_usage_list():View {
         $usage = ResourceService::get_used_resource_in_this_month();
         return view("show_usage_list")->with("data", $usage);
+    }
+    public function downloadexcel() {
+        $date = date("Y_m_d");
+        return Excel::download(new UsageListExport(), 'resource_usage'.$date.'.xlsx');
     }
 }

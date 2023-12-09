@@ -20,6 +20,8 @@ use App\Http\Controllers\ResourceController;
 Route::get("/", [RouteController::class, "login_route"]);
 Route::post("/login_post", [UserController::class, "login_post"]);
 
+/* Auth protected routes */
+
 Route::middleware("auth")->group(function () {
     Route::get("/printer_list", [RouteController::class, "show_printer_list"]);
     Route::get("/resource_list", [RouteController::class, "show_resources_list"]);
@@ -29,9 +31,10 @@ Route::middleware("auth")->group(function () {
     Route::post("/resource_out_get_printers", [ResourceController::class, "resource_out_get_printers"])->name("resource_out.get_printers");
     Route::post("/resource_out.submit", [ResourceController::class, "resource_out_submit"])->name("resource_out.submit");
     Route::get("/usage_list", [RouteController::class, "show_usage_list"]);
+    Route::get("/download_used_list", [RouteController::class, "downloadexcel"]);
 });
 
-/* Protected Routes */
+/* Admin Protected Routes */
 Route::middleware(["admin", "auth"])->group(function () {
     Route::get("/add_printer", [RouteController::class, "add_printer_page"]);
     Route::post("/add_printer_submit", [PrinterController::class, "add_printer_submit"])->name("add_printer.submit");
