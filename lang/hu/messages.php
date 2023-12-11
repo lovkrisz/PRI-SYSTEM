@@ -54,4 +54,7 @@ return [
     "choose_month" => "Hónap kiválasztása",
     "year" => "Év",
     "month" => "Hónap",
+    "inventory_count" => "Leltár",
+    "accept_inventory_count" => "Elfogadom a leltár eredményt",
+    "delete_inventory_count" => "Törlöm a leltár táblát!",
 ];

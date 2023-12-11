@@ -17,6 +17,12 @@ class ResourceService
 
         Resource::create($validated_data);
     }
+    public static function exists(string $barcode): bool {
+        $resource = Resource::where("barcode", $barcode)->first();
+        if($resource)
+            return true;
+        return false;
+    }
 
     static public function get_all_by_name_paginated(int $max_rows_per_page): LengthAwarePaginator
     {
@@ -70,6 +76,13 @@ class ResourceService
         $resource = Resource::where("barcode", $barcode)->first();
         if ($resource) {
             return $resource["name"];
+        } else
+            return "";
+    }
+    public static function get_data_for_inventory(string $barcode): string {
+        $resource = Resource::where("barcode", $barcode)->first();
+        if ($resource) {
+            return $resource["color"]." ".$resource["name"]." ".$resource["capacity"];
         } else
             return "";
     }

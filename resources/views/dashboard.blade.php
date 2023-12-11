@@ -84,6 +84,15 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/inventory_count" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                {{ __('messages.inventory_count') }}
+                                {{-- <span class="right badge badge-danger">New</span> --}}
+                            </p>
+                        </a>
+                    </li>
                     <li class="nav-header">{{ __('messages.resource_actions') }}</li>
                     <li class="nav-item">
                         <a href="/resource_in" class="nav-link">

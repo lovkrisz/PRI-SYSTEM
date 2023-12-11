@@ -13,6 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
-        "/resource_out_get_printers"
+        "/resource_out_get_printers",
+        "/inventory_count/*"
     ];
 }

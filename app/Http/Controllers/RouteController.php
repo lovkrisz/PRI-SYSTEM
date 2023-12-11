@@ -52,4 +52,7 @@ class RouteController extends Controller
         $date = date("Y_m_d");
         return Excel::download(new UsageListExport(), 'resource_usage'.$date.'.xlsx');
     }
+    public function inventory_count() {
+        return view("inventory_count");
+    }
 }

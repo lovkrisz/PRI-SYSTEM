@@ -32,6 +32,12 @@ Route::middleware("auth")->group(function () {
     Route::post("/resource_out.submit", [ResourceController::class, "resource_out_submit"])->name("resource_out.submit");
     Route::get("/usage_list", [RouteController::class, "show_usage_list"]);
     Route::get("/download_used_list", [RouteController::class, "downloadexcel"]);
+    Route::get("/inventory_count", [RouteController::class, "inventory_count"]);
+
+    Route::post("/inventory_count/save_row", [ResourceController::class, "inventory_save_row"]);
+    Route::get("/inventory_count/get_inventory_table_data", [ResourceController::class, "get_inventory_table_data"]);
+    Route::post("/inventory_count/accept", [ResourceController::class, "inventory_count_accept"]);
+    Route::post("/inventory_count/delete", [ResourceController::class, "inventory_count_delete"]);
 });
 
 /* Admin Protected Routes */
