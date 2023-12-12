@@ -20,7 +20,7 @@ return new class extends Migration {
         DB::table("users")->insert([
             "username" => "admin",
             "password" => \Illuminate\Support\Facades\Hash::make("admin"),
-            "is_admin" => 0
+            "is_admin" => 1
         ]);
     }
 

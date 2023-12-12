@@ -78,11 +78,11 @@
     $(document).on("keypress", "#barcode_here", function(e){
         if(e.which == 13){
             var inputVal = $(this).val();
-            // Step 1 Save it to the table
+            
             $.ajax({
                 statusCode: {
                     500: function() {
-                        alert("Barcode Not Found");
+                        alert("{{__("messages.error_barcode_not_found")}}");
                         return;
                     }
                 },

@@ -57,4 +57,5 @@ return [
     "inventory_count" => "Leltár",
     "accept_inventory_count" => "Elfogadom a leltár eredményt",
     "delete_inventory_count" => "Törlöm a leltár táblát!",
+    "error_barcode_not_found" => "Vonalkód nem található!",
 ];
