@@ -39,7 +39,7 @@
                                 value="{{ old('color') }}">
                         </div>
                         <div class="form-group">
-                            <label for="name">{{ __('messages.resource_capacity') }}</label>
+                            <label for="capacity">{{ __('messages.resource_capacity') }}</label>
                             <input type="text" class="form-control" id="capacity" name="capacity"
                                 value="{{ old('capacity') }}">
                         </div>
@@ -61,9 +61,9 @@
                         <div class="form-group">
                             <label for="usablebyprinters">{{ __('messages.resource_usablebyprinters') }}</label>
                             <select multiple="" class="form-control" id="usablebyprinters" name="usablebyprinters[]">
-                                @foreach (\App\Models\Printer::all() as $p)
-                                    <option value="{{ $p->id }}">{{ $p->name }} {{ $p->brand }}
-                                        {{ $p->type }}</option>
+                                @foreach (\App\Models\Printer::select(["type", "brand"])->distinct()->get() as $p)
+                                    <option value="{{ $p->type }}">{{ $p->brand }} {{ $p->type }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>

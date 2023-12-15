@@ -42,9 +42,9 @@ class ResourceController extends Controller
     public function resource_out_get_printers(ResourceOutGetPrintersRequest $req): Collection
     {
         $validated = $req->validated();
-        $printer_id_list = ResourceService::find_by_barcode(barcode: $validated["barcode"]);
-        if (!empty($printer_id_list)) {
-            return PrinterService::get_all_printer_by_id(idarray: $printer_id_list);
+        $printer_type_list = ResourceService::find_by_barcode(barcode: $validated["barcode"]);
+        if (!empty($printer_type_list)) {
+            return PrinterService::get_all_printer_by_type(typearray: $printer_type_list);
         }
         return Collection::empty();
 

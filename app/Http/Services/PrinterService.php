@@ -16,17 +16,21 @@ class PrinterService
     {
         return Printer::orderBy("name", "ASC")->paginate($max_rows_per_page);
     }
-    static public function get_printer_by_id(int $id): Printer
+    static public function get_printer_by_model(string $model): array
     {
-        return Printer::where("id", $id)->first();
+        $printer = Printer::where("type", $model)->get()->toArray();
+        if (sizeof($printer) < 1)
+            return [];
+        else
+            return $printer;
     }
     static function get_all()
     {
         return Printer::all();
     }
-    static function get_all_printer_by_id(array $idarray): Collection
+    static function get_all_printer_by_type(array $typearray): Collection
     {
-        return Printer::whereIn("id", $idarray)->get();
+        return Printer::whereIn("type", $typearray)->get();
     }
     public static function get_name_by_id(int $id): string {
         $printer = Printer::where("id", $id)->first();

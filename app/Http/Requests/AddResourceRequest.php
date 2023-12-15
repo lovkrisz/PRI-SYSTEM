@@ -23,7 +23,7 @@ class AddResourceRequest extends FormRequest
     {
         return [
             "name" => "required|regex:/^([A-Za-z0-9aáeéiíoóöőuúüűAÁEÉIÍOÓÖŐUÚÜŰ _-]*)$/",
-            "color" => "required|regex:/^([A-Za-z0-9aáeéiíoóöőuúüűAÁEÉIÍOÓÖŐUÚÜŰ _-]*)$/",
+            "color" => "nullable",
             "capacity" => "nullable|integer",
             "quantity" => "required|regex:/^([0-9]*)$/",
             "barcode" => "required",

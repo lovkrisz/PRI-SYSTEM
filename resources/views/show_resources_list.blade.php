@@ -29,11 +29,13 @@
                                 $printer_details = [];
                                 $i = 0;
                                 foreach ($r->usablebyprinters as $ubp) {
-                                    $printer = \App\Http\Services\PrinterService::get_printer_by_id(id: $ubp);
-                                    $printer_details[$i]['name'] = $printer->name;
-                                    $printer_details[$i]['type'] = $printer->type;
-                                    $printer_details[$i]['brand'] = $printer->brand;
-                                    $i++;
+                                 $printer = \App\Http\Services\PrinterService::get_printer_by_model(model: $ubp);
+                                    foreach($printer as $p) {
+                                        $printer_details[$i]['name'] = $p["name"];
+                                        $printer_details[$i]['type'] = $p["type"];
+                                        $printer_details[$i]['brand'] = $p["brand"];
+                                        $i++;
+                                    }
                                 }
 
                             @endphp

@@ -36,7 +36,10 @@ class ResourceService
         if ($irany == "up")
             $resource = Resource::where("barcode", $validated_data["barcode"])->increment("quantity", $validated_data["amount"]);
         else {
-            $printer = Resource::where("usablebyprinters", 'like', '%"' . $validated_data["printer"] . '"%')->where("barcode", $validated_data["barcode"])->first();
+            $printer_type_from_id = PrinterService::get_type_by_id($validated_data["printer"]);
+            if ($printer_type_from_id == "")
+                return false;
+            $printer = Resource::where("usablebyprinters", 'like', '%"' . $printer_type_from_id . '"%')->where("barcode", $validated_data["barcode"])->first();
             if (!$printer)
                 return false;
             $resource = Resource::where("barcode", $validated_data["barcode"])->decrement("quantity", 1);
