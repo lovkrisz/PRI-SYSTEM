@@ -81,7 +81,7 @@
 @section('site-specific')
     <script>
         $(document).on("keypress", "#barcode", function(e) {
-            if (e.which == 13) {
+            if (e.which === 13) {
                 e.preventDefault();
                 var self = $(this),
                     form = self.parents('form:eq(0)'),
